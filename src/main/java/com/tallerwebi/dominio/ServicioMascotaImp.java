@@ -8,4 +8,10 @@ public class ServicioMascotaImp {
         return new MascotaDTO(nombre);
     }
 
+    public MascotaDTO jugar(MascotaDTO mascota) {
+
+        mascota.jugar();
+
+        return mascota;
+    }
 }
