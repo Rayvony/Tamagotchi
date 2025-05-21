@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.tallerwebi.presentacion.MascotaDTO;
+
 @Entity
 public class Usuario {
 
@@ -15,6 +17,7 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
+    private MascotaDTO mascota;
 
     public Long getId() {
         return id;
@@ -53,5 +56,11 @@ public class Usuario {
 
     public void activar() {
         activo = true;
+    }
+    public void setMascota(MascotaDTO mascota) {
+        this.mascota = mascota;
+    }
+    public MascotaDTO getMascota() {
+        return this.mascota;
     }
 }

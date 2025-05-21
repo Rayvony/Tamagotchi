@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tallerwebi.dominio.ServicioMascotaImp;
+import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.MascotaExistenteExcepction;
 
 public class ControladorMascota {
 
@@ -17,12 +19,17 @@ public class ControladorMascota {
         this.servicioMascota = servicioMascota;
     }
 
-    @RequestMapping(path = "/mascota", method = RequestMethod.POST)
-    public ModelAndView crearMascota(String nombre) {
+    @RequestMapping(path = "/lobby", method = RequestMethod.POST)
+    public ModelAndView crearMascota(String nombre, Usuario usuario) throws MascotaExistenteExcepction {
         ModelMap modelo = new ModelMap();
-        MascotaDTO mascotaCreada = servicioMascota.crearMascota(nombre);
-        modelo.put("nombre", mascotaCreada.getNombre());
-        return new ModelAndView("mascota", modelo);
+        try {
+            MascotaDTO mascotaCreada = servicioMascota.crearMascota(nombre, usuario);
+            modelo.put("nombre", mascotaCreada.getNombre());
+            return new ModelAndView("mascota", modelo);
+        } catch (MascotaExistenteExcepction e) {
+            modelo.put("error", e.getMessage());
+            return new ModelAndView("lobby", modelo);
+        }
 
     }
 
