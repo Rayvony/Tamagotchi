@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Taller Web I</title>
+
+  <!-- Bootstrap core css -->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+
+  <!-- Custom style -->
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<body>
+  <main role="main" class="container">
+    <div class="container">
+      <div class="bar-container">
+        <div class="bar energy">
+          <img class="icon" th:src="@{/img/energy.jpg}" />
+        </div>
+        <div class="bar happiness">
+          <img class="icon" th:src="@{/img/happiness.jpg}" />
+        </div>
+      </div>
+
+      <div class="pet-container">
+        <div class="pet">
+          <img src="https://static.wikia.nocookie.net" />
+        </div>
+      </div>
+
+      <div class="bar-container">
+        <div class="bar hunger">
+          <img class="icon" th:src="@{/img/hunger.jpg}" />
+        </div>
+        <div class="bar cleanliness">
+          <img class="icon" th:src="@{/img/cleanliness.jpg}" />
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button class="button">
+          <img class="icon" th:src="@{/img/game-black.jpg}" />
+        </button>
+        <button class="button">
+          <img class="icon" th:src="@{/img/medicine-black.jpg}" />
+        </button>
+        <button class="button">
+          <img class="icon" th:src="@{/img/bath-black.jpg}" />
+        </button>
+        <button class="button">
+          <img class="icon" th:src="@{/img/lightOn-black.jpg}" />
+        </button>
+        <button class="button">
+          <img class="icon" th:src="@{/img/food-black.jpg}" />
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap core js -->
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+</body>
+</html>
