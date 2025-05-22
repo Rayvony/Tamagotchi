@@ -1,5 +1,8 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.dominio.excepcion.MascotaExistenteExcepction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tallerwebi.dominio.ServicioMascotaImp;
-import com.tallerwebi.dominio.Usuario;
-import com.tallerwebi.dominio.excepcion.MascotaExistenteExcepction;
 
 public class ControladorMascota {
 
@@ -35,12 +36,19 @@ public class ControladorMascota {
 
     }
 
-    @GetMapping("/higiene")
-    public ModelAndView verHigiene(MascotaDTO mascota) {
-        ModelAndView mav = new ModelAndView("mascota");
-        Double higiene = servicioMascota.verHigiene(mascota);
-        mav.addObject("higiene", higiene);
-        return mav;
+    @RequestMapping(path = "/mascota/jugar", method = RequestMethod.POST)
+    public ModelAndView jugar(MascotaDTO mascota) {
+        ModelMap modelo = new ModelMap();
+        try {
+            servicioMascota.jugar(mascota);
+        } catch (EnergiaInsuficiente energiaInsuficiente) {
+            modelo.put("error","No podés jugar, te falta energía");
+        }
+
+        modelo.put("nombre", mascota.getNombre());
+        modelo.put("energia", mascota.getEnergia());
+
+        return new ModelAndView("mascota",modelo);
     }
 
     @PostMapping("/higienizar")
@@ -50,4 +58,13 @@ public class ControladorMascota {
         mav.addObject("higiene", 100.0);
         return mav;
     }
+
+    @GetMapping("/higiene")
+    public ModelAndView verHigiene(MascotaDTO mascota) {
+        ModelAndView mav = new ModelAndView("mascota");
+        Double higiene = servicioMascota.verHigiene(mascota);
+        mav.addObject("higiene", higiene);
+        return mav;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.tallerwebi.presentacion;
 
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tallerwebi.dominio.ServicioMascotaImp;
@@ -54,6 +53,7 @@ public class ControladorMascotaTest {
         assertThat(mav.getModel().get("higiene"), equalTo(higieneEsperada));
     }
 
+
     @Test
     public void queAlHigienizarseElValorDeHigieneVuelvaACien() throws MascotaExistenteExcepction {
         // PREPARACION
@@ -69,10 +69,64 @@ public class ControladorMascotaTest {
         //VERIFICACION
         assertThat(mav.getViewName(), equalTo(vistaEsperada));
         assertThat(mav.getModel().get("higiene"), equalTo(100.0));
+    }
+
+    @Test
+    public void queAlCrearseUnaMascotaTengaCienDeEnergiaAsignadaPorDefecto() throws MascotaExistenteExcepction {
+        //  PREPARACION
+        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+        String vistaEsperada = "mascota";
+        Double energiaEsperada = 100.00;
+
+        // EJECUCION
+        ModelAndView modelAndView = controladorMascota.crearMascota(mascota.getNombre(), new Usuario());
+
+        // VERIFICACION
+        assertThat(modelAndView.getViewName(),equalTo(vistaEsperada));
+        assertThat(modelAndView.getModel().get("energia"), equalTo(energiaEsperada));
+    }
+
+    @Test
+    public void queAlJugarSeDescuenten25PuntosDeEnergia(){
+        //  PREPARACION
+        String vistaEsperada = "mascota";
+        Double energiaEsperada = 75.00;
+
+        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+
+        // EJECUCION
+        ModelAndView modelAndView = controladorMascota.jugar(mascota);
+
+        // VERIFICACION
+        assertThat(modelAndView.getViewName(),equalTo(vistaEsperada));
+        assertThat(modelAndView.getModel().get("energia"), equalTo(energiaEsperada));
+    }
+
+    @Test
+    public void quelIntentarJugarSinEnergiaSuficienteDevueltaLaVistaConUnMensajeDeError(){
+        //  PREPARACION
+        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+        String vistaEsperada = "mascota";
+        Double energiaEsperada = 0.00;
+        String mensajeDEErrorEsperado = "No podés jugar, te falta energía";
+
+        // EJECUCION
+        controladorMascota.jugar(mascota);
+        controladorMascota.jugar(mascota);
+        controladorMascota.jugar(mascota);
+        controladorMascota.jugar(mascota);
+
+        ModelAndView modelAndView = controladorMascota.jugar(mascota);
+        // VERIFICACION
+
+        assertThat(modelAndView.getViewName(),equalTo(vistaEsperada));
+        assertThat(modelAndView.getModel().get("energia"), equalTo(energiaEsperada));
+        assertThat(modelAndView.getModel().get("error"), equalTo(mensajeDEErrorEsperado));
+
+    }
 
 
     }
 
 
 
-}

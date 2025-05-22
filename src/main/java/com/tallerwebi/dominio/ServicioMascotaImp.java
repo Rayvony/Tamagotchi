@@ -61,4 +61,10 @@ public class ServicioMascotaImp implements ServicioMascota {
         return mascota.getHigiene();
     }
 
+    public MascotaDTO jugar(MascotaDTO mascota) {
+
+        mascota.jugar();
+
+        return mascota;
+    }
 }
