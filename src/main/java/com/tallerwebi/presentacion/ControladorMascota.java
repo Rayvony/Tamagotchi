@@ -2,6 +2,8 @@ package com.tallerwebi.presentacion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,8 +35,19 @@ public class ControladorMascota {
 
     }
 
+    @GetMapping("/higiene")
+    public ModelAndView verHigiene(MascotaDTO mascota) {
+        ModelAndView mav = new ModelAndView("mascota");
+        Double higiene = servicioMascota.verHigiene(mascota);
+        mav.addObject("higiene", higiene);
+        return mav;
+    }
 
-
-
-
+    @PostMapping("/higienizar")
+    public ModelAndView higienizar(MascotaDTO mascota) {
+        servicioMascota.higienizarMascota(mascota);
+        ModelAndView mav = new ModelAndView("mascota");
+        mav.addObject("higiene", 100.0);
+        return mav;
+    }
 }

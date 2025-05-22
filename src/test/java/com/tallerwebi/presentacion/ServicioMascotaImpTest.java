@@ -3,6 +3,8 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioMascotaImp;
 
+import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.excepcion.MascotaExistenteExcepction;
 import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -15,13 +17,13 @@ public class ServicioMascotaImpTest {
     ServicioMascotaImp servicioMascota = new ServicioMascotaImp();
 
     @Test
-    public void dadoQueSeCreaUnaMascotaSuHigieneSeIniciaEnCien() {
-        assertEquals(100.0, servicioMascota.crearMascota("Charly").getHigiene());
+    public void dadoQueSeCreaUnaMascotaSuHigieneSeIniciaEnCien() throws MascotaExistenteExcepction {
+        assertEquals(100.0, servicioMascota.crearMascota("Charly", new Usuario()).getHigiene());
     }
 
     @Test
-    public void dadoQueLaMascotaSeHigienizaSeGuardiaLaHoraDeUltimaHigiene(){
-        MascotaDTO mascota = servicioMascota.crearMascota("Charly");
+    public void dadoQueLaMascotaSeHigienizaSeGuardiaLaHoraDeUltimaHigiene() throws MascotaExistenteExcepction {
+        MascotaDTO mascota = servicioMascota.crearMascota("Charly", new Usuario());
 
         servicioMascota.higienizarMascota(mascota);
 
