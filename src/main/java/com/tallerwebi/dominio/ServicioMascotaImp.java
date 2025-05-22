@@ -31,4 +31,9 @@ public class ServicioMascotaImp implements ServicioMascota {
 
     }
 
+    public void alimentarMascota(MascotaDTO mascota) {
+        Integer hambreActualizada = mascota.getHambre() - 25;
+        mascota.setHambre(hambreActualizada);
+    }
+
 }

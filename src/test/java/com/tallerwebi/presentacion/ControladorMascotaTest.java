@@ -69,4 +69,23 @@ public class ControladorMascotaTest {
 
     }
 
+    @Test 
+    public void queUnaMascotaPuedaAlimentarseYDisminuyaSuHambre () {
+        //PREPARACION
+        MascotaDTO mascota = new MascotaDTO("nombreCualquiera");
+        mascota.setHambre(95);
+
+        ModelAndView modelAndView = controladorMascota.alimentarMascota(mascota);
+        String vistaEsperada = "mascota";
+        Integer hambreEsperada = 70;
+
+        MascotaDTO mascotaObtenida = (MascotaDTO) modelAndView.getModel().get("mascota");
+
+
+        assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
+        assertThat(hambreEsperada, equalTo(mascotaObtenida.getHambre()));
+
+
+    }
+
 }
