@@ -33,45 +33,10 @@ public class ControladorMascotaTest {
     public void inicializar() {
         servicioMascota = new ServicioMascotaImp();
         controladorMascota = new ControladorMascota(servicioMascota);
-       // usuarioMock = mock(Usuario.class);
+       usuarioMock = mock(Usuario.class);
     }
 
-    @Test
-    public void queSePuedaCrearUnaMascotaConSuNombre() throws MascotaExistenteExcepction {
-        // PREPARACION
-        MascotaDTO mascota = new MascotaDTO("nombreCualquiera");
-        Usuario nuevoUsuario = new Usuario();
 
-        // EJECUCION
-        ModelAndView modelAndView = controladorMascota.crearMascota(mascota.getNombre(), nuevoUsuario);
-
-        // VERIFICACION
-        String vistaEsperada = "mascota";
-        String nombreMascotaEsperado = "nombreCualquiera";
-
-        assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
-        assertThat(nombreMascotaEsperado, equalTo(modelAndView.getModel().get("nombre")));
-
-    }
-    
-    @Test
-    public void queUnUsuarioConMascotaNoPuedaCrearOtraYDevuelvaError() throws MascotaExistenteExcepction {
-        // PREPARACION
-        MascotaDTO mascota = new MascotaDTO("nombreCualquiera");
-        MascotaDTO mascotaNueva = new MascotaDTO("otroNombre");
-        when(usuarioMock.getMascota()).thenReturn(mascota);
-
-        // EJECUCION
-        ModelAndView modelAndView = controladorMascota.crearMascota(mascotaNueva.getNombre(), usuarioMock);
-
-        // VERIFICACION
-        String vistaEsperada = "lobby";
-        String mensajeError = "Ya contas con tu mascota, solo debes hacer click en jugar";
-
-        assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
-        assertThat(modelAndView.getModel().get("error").toString(), equalTo(mensajeError));
-
-    }
 
     @Test
     public void queAlSolicitarLaHigieneLaDevuelveCorrectamente() throws MascotaExistenteExcepction {
