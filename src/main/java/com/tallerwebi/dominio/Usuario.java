@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.tallerwebi.presentacion.MascotaDTO;
 
-@Entity
+@Entity // REPRESENTA UNA TABLA EN LA BASE DE DATOS 
 public class Usuario {
 
     @Id
@@ -17,7 +18,8 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
-    private MascotaDTO mascota;
+    @Transient // NO CREA UNA TABLA EN LA BASE DE DATOS
+    private Mascota mascota;
 
     public Long getId() {
         return id;
@@ -57,10 +59,10 @@ public class Usuario {
     public void activar() {
         activo = true;
     }
-    public void setMascota(MascotaDTO mascota) {
+    public void setMascota(Mascota mascota) {
         this.mascota = mascota;
     }
-    public MascotaDTO getMascota() {
+    public Mascota getMascota() {
         return this.mascota;
     }
 }

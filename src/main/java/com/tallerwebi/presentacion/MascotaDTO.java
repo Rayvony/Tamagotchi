@@ -1,5 +1,7 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Mascota;
+
 public class MascotaDTO {
 
     private String nombre;
@@ -8,6 +10,8 @@ public class MascotaDTO {
     public MascotaDTO(String nombre) {
         this.nombre = nombre;
     }
+
+   
 
     public String getNombre() {
         return this.nombre;
@@ -19,6 +23,17 @@ public class MascotaDTO {
 
     public Integer getHambre() {
         return this.hambre;
+    }
+
+     public MascotaDTO(Mascota mascota) {
+        this.nombre = mascota.getNombre();
+        this.hambre = mascota.getHambre();
+    }
+
+    public Mascota aEntidad (){
+        Mascota mascota = new Mascota(this.nombre);
+        mascota.setHambre(this.hambre);
+        return mascota;
     }
 
 }

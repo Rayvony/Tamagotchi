@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tallerwebi.dominio.Mascota;
 import com.tallerwebi.dominio.ServicioMascotaImp;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.MascotaExistenteExcepction;
@@ -53,8 +54,8 @@ public class ControladorMascotaTest {
     @Test
     public void queUnUsuarioConMascotaNoPuedaCrearOtraYDevuelvaError() throws MascotaExistenteExcepction {
         // PREPARACION
-        MascotaDTO mascota = new MascotaDTO("nombreCualquiera");
-        MascotaDTO mascotaNueva = new MascotaDTO("otroNombre");
+        Mascota mascota = new Mascota("nombreCualquiera");
+        Mascota mascotaNueva = new Mascota("otroNombre");
         when(usuarioMock.getMascota()).thenReturn(mascota);
 
         // EJECUCION

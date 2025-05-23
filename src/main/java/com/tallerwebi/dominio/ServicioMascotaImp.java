@@ -24,9 +24,11 @@ public class ServicioMascotaImp implements ServicioMascota {
         if (usuario.getMascota() != null) {
             throw new MascotaExistenteExcepction("Ya contas con tu mascota, solo debes hacer click en jugar");
         } else {
-            MascotaDTO mascota = new MascotaDTO(nombre);
+            Mascota mascota = new Mascota(nombre); 
             usuario.setMascota(mascota);
-            return usuario.getMascota();
+            // UN DTO CONSTRUIDO A PARTIR DE LA ENTIDAD
+            // ESTO LO CREO PARA SEPARAR LAS CAPAS Y NO PASAR LA ENTIDAD A LA VISTA 
+            return new MascotaDTO(mascota);
         }
 
     }
