@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tallerwebi.dominio.ServicioMascotaImp;
+import com.tallerwebi.dominio.Usuario;
 
 public class ControladorMascota {
 
@@ -19,9 +20,9 @@ public class ControladorMascota {
     }
 
     @RequestMapping(path = "/mascota", method = RequestMethod.POST)
-    public ModelAndView crearMascota(String nombre) {
+    public ModelAndView crearMascota(String nombre, Usuario usuario) {
         ModelMap modelo = new ModelMap();
-        MascotaDTO mascotaCreada = servicioMascota.crearMascota(nombre);
+        MascotaDTO mascotaCreada = servicioMascota.crearMascota(nombre,usuario);
         modelo.put("nombre", mascotaCreada.getNombre());
         modelo.put("energia", mascotaCreada.getEnergia());
         return new ModelAndView("mascota", modelo);

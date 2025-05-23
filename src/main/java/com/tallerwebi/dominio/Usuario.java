@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Usuario {
@@ -15,6 +16,8 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
+    @Transient
+    private Mascota mascota;
 
     public Long getId() {
         return id;
@@ -53,5 +56,11 @@ public class Usuario {
 
     public void activar() {
         activo = true;
+    }
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
+    }
+    public Mascota getMascota() {
+        return this.mascota;
     }
 }

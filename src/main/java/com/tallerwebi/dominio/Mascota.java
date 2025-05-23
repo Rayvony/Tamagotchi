@@ -1,18 +1,23 @@
-package com.tallerwebi.presentacion;
+package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.presentacion.MascotaDTO;
 
-public class MascotaDTO {
-
+public class Mascota {
     private String nombre;
     private Double energia;
     private Double energiaADescontarPorJuego;
 
-    public MascotaDTO(String nombre) {
+    public Mascota(String nombre) {
         this.nombre = nombre;
         this.energia = 100.00;
         this.energiaADescontarPorJuego = 25.00;
+    }
+
+    // NO LE ESTOY PASANDO LOS VALORES ACUTALIZADOS // PODRIA RESOLVERLO PASANDO POR PARAMETRO EL OBJETO
+    public MascotaDTO aDTO(){
+        MascotaDTO mascotaDTO = new MascotaDTO(this.nombre);
+        return mascotaDTO;
     }
 
     public String getNombre() {
@@ -23,9 +28,6 @@ public class MascotaDTO {
         return this.energia;
     }
 
-     public void setEnergia(Double energia) {
-        this.energia = energia;
-    }
 
     public void jugar() {
         if(this.energia >= energiaADescontarPorJuego) {
@@ -34,17 +36,4 @@ public class MascotaDTO {
             throw new EnergiaInsuficiente("No podés jugar, te falta energía");
         }
     }
-
-    public MascotaDTO(Mascota mascota) {
-        this.nombre = mascota.getNombre();
-        //this.hambre = mascota.getHambre();
-    }
-
-    // NO LE ESTOY PASANDO LOS VALORES ACUTALIZADOS // PODRIA RESOLVERLO PASANDO POR PARAMETRO EL OBJETO
-    public Mascota aEntidad (){
-        Mascota mascota = new Mascota(this.nombre);
-        return mascota;
-    }
-
-   
 }
