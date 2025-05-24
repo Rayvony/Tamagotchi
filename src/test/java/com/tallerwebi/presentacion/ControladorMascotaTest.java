@@ -1,11 +1,13 @@
 package com.tallerwebi.presentacion;
 
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tallerwebi.dominio.Mascota;
 import com.tallerwebi.dominio.ServicioMascotaImp;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.dominio.excepcion.MascotaExistente;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,12 +49,25 @@ public class ControladorMascotaTest {
         assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
         assertThat(nombreMascotaEsperado, equalTo(modelAndView.getModel().get("nombre")));
     }
-    /*
-     * @Test
-     * public void queUnUsuarioConMascotaNoPuedaCrearOtra(){
-     * 
-     * }
-     */
+    
+     @Test
+     public void queUnUsuarioConMascotaNoPuedaCrearOtra(){
+        // PREPARACION
+        Mascota mascota = new Mascota("nombreCualquiera");
+        String mensajeDeErrorEsperado = "Ya contas con tu mascota, debes hacer click en jugar";
+
+        when(usuarioMock.getMascota()).thenReturn(mascota);
+        when(servicioMascotaMock.crearMascota(mascota.getNombre(), usuarioMock)).thenThrow(new MascotaExistente(mensajeDeErrorEsperado));
+
+        // EJECUCION
+        ModelAndView modelAndView = controladorMascota.crearMascota(mascota.getNombre(), usuarioMock);
+
+        // VERIFICACION
+        assertThat(modelAndView.getViewName(), equalTo("lobby"));
+        assertThat(modelAndView.getModel().get("error"), equalTo(mensajeDeErrorEsperado));
+
+     }
+     
 
     @Test
     public void queAlCrearseUnaMascotaTengaCienDeEnergiaAsignadaPorDefecto() {

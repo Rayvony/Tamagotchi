@@ -19,12 +19,19 @@ public class ControladorMascota {
         this.servicioMascota = servicioMascota;
     }
 
+    // CREO QUE DEBE ESTAR EN UNA VISTA (PATH) LLAMADA "LOBY" 
+
     @RequestMapping(path = "/mascota", method = RequestMethod.POST)
     public ModelAndView crearMascota(String nombre, Usuario usuario) {
         ModelMap modelo = new ModelMap();
+        try {
         MascotaDTO mascotaCreada = servicioMascota.crearMascota(nombre,usuario);
         modelo.put("nombre", mascotaCreada.getNombre());
         modelo.put("energia", mascotaCreada.getEnergia());
+        } catch (Exception mascotaExistenteException) {
+            modelo.put("error", mascotaExistenteException.getMessage());
+            return new ModelAndView("lobby", modelo);
+        }
         return new ModelAndView("mascota", modelo);
     }
 

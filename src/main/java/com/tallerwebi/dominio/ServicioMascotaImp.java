@@ -1,13 +1,19 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.excepcion.MascotaExistente;
 import com.tallerwebi.presentacion.MascotaDTO;
 
 public class ServicioMascotaImp implements ServicioMascota {
 
     @Override
     public MascotaDTO crearMascota(String nombre, Usuario usuario) {
-        Mascota mascota = new Mascota(nombre);
-        usuario.setMascota(mascota);
+        if (usuario.getMascota() != null) {
+            throw new MascotaExistente("Ya contas con tu mascota, debes hacer click en jugar");
+        } else {
+            Mascota mascota = new Mascota(nombre);
+            usuario.setMascota(mascota);
+        }
+        
         return new MascotaDTO(nombre);
     }
 
