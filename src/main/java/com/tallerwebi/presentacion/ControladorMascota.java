@@ -49,4 +49,13 @@ public class ControladorMascota {
 
         return new ModelAndView("mascota",modelo);
     }
+
+    @RequestMapping(path = "/mascota/alimentar", method = RequestMethod.POST)
+    public ModelAndView alimentar(MascotaDTO mascota) {
+        ModelMap modelo = new ModelMap();
+        MascotaDTO mascotaAlimentada = servicioMascota.alimentar(mascota);
+        modelo.put("hambre", mascotaAlimentada.getHambre());
+        modelo.put("ultimaAlimentacion", mascotaAlimentada.getUltimaAlimentacion());
+        return new ModelAndView("mascota", modelo);
+    }
 }

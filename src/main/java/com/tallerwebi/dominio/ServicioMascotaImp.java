@@ -24,4 +24,12 @@ public class ServicioMascotaImp implements ServicioMascota {
 
         return mascota;
     }
+
+    @Override
+    public MascotaDTO alimentar(MascotaDTO mascota) {
+
+        mascota.alimentar();
+
+        return mascota;
+    }
 }

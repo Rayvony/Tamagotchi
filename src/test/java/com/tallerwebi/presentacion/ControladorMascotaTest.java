@@ -13,21 +13,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ControladorMascotaTest {
 
     private ServicioMascotaImp servicioMascotaMock;
     private ControladorMascota controladorMascota;
     private Usuario usuarioMock;
+    private MascotaDTO mascotaMock;
 
     @BeforeEach
     public void inicializar() {
         servicioMascotaMock = mock(ServicioMascotaImp.class);
         controladorMascota = new ControladorMascota(servicioMascotaMock);
         usuarioMock = mock(Usuario.class);
+        mascotaMock = mock(MascotaDTO.class);
     }
 
     @Test
@@ -145,6 +152,30 @@ public class ControladorMascotaTest {
         assertThat(modelAndView.getModel().get("energia"), equalTo(energiaEsperada));
         assertThat(modelAndView.getModel().get("error"), equalTo(mensajeDEErrorEsperado));
 
+    }
+
+    @Test
+    public void queUnUsuarioPresionaAlimentarYLaMascotaDisminuyaSuHambreYRegistreSuHorarioDeAlimentacion(){
+        // PREPARACION 
+        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+
+        
+        doAnswer(invocation -> {
+            MascotaDTO m = invocation.getArgument(0);
+            m.setHambre(m.getHambre() - 25.00); 
+            m.setUltimaAlimentacion(LocalDateTime.now());
+            return m;
+        }).when(servicioMascotaMock).alimentar(mascota);
+
+        // EJECUCION
+        ModelAndView modelAndView = controladorMascota.alimentar(mascota);
+
+        // VERIFICACION
+        String vistaEsperada = "mascota";
+        Double hambreEsperada = 45.00; 
+        assertThat(modelAndView.getViewName(), equalTo(vistaEsperada));
+        assertThat(modelAndView.getModel().get("hambre"), equalTo(hambreEsperada));
+        assertThat(modelAndView.getModel().get("ultimaAlimentacion"), instanceOf(LocalDateTime.class));
     }
 
 }
