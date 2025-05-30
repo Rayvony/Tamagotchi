@@ -11,7 +11,7 @@ public class MascotaDTO {
     public MascotaDTO(String nombre) {
         this.nombre = nombre;
         this.energia = 100.00;
-        this.energiaADescontarPorJuego = 25.00;
+        this.energiaADescontarPorJuego = 30.00;
     }
 
     public String getNombre() {

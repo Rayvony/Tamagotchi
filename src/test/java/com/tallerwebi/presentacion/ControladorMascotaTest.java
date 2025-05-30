@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tallerwebi.dominio.ServicioMascotaImp;
@@ -17,6 +18,7 @@ public class ControladorMascotaTest {
 
     @BeforeEach 
     public void inicializar(){
+        ModelMap modelo = new ModelMap();
         servicioMascota = new ServicioMascotaImp();
         controladorMascota = new ControladorMascota(servicioMascota);
     }
@@ -60,15 +62,14 @@ public class ControladorMascotaTest {
     }
 
     @Test
-    public void queAlJugarSeDescuenten25PuntosDeEnergia(){
+    public void queAlJugarSeDescuenten30PuntosDeEnergia(){
         //  PREPARACION
         String vistaEsperada = "mascota";
-        Double energiaEsperada = 75.00;
-
-        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+        Double energiaEsperada = 70.00;
+        ModelAndView modelAndView = controladorMascota.crearMascotaConGet();
 
         // EJECUCION
-        ModelAndView modelAndView = controladorMascota.jugar(mascota);
+        modelAndView = controladorMascota.jugar();
 
         // VERIFICACION
         assertThat(modelAndView.getViewName(),equalTo(vistaEsperada));
@@ -78,18 +79,18 @@ public class ControladorMascotaTest {
     @Test
     public void quelIntentarJugarSinEnergiaSuficienteDevueltaLaVistaConUnMensajeDeError(){
         //  PREPARACION
-        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+        ModelAndView modelAndView = controladorMascota.crearMascotaConGet();
         String vistaEsperada = "mascota";
-        Double energiaEsperada = 0.00;
+        Double energiaEsperada = 10.00;
         String mensajeDEErrorEsperado = "No podés jugar, te falta energía";
 
         // EJECUCION
-        controladorMascota.jugar(mascota);
-        controladorMascota.jugar(mascota);
-        controladorMascota.jugar(mascota);
-        controladorMascota.jugar(mascota);
+        controladorMascota.jugar();
+        controladorMascota.jugar();
+        controladorMascota.jugar();
+        controladorMascota.jugar();
 
-        ModelAndView modelAndView = controladorMascota.jugar(mascota);
+        modelAndView = controladorMascota.jugar();
         // VERIFICACION
 
         assertThat(modelAndView.getViewName(),equalTo(vistaEsperada));
