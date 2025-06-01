@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Taller Web I</title>
+
+  <!-- Bootstrap core css -->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
+
+  <!-- Custom style -->
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<body>
+<main role="main" class="container">
+  <div class="container">
+
+
+    <div class="button-container">
+
+      <form th:each="mascota : ${mascotas}" th:action="@{'/mascota/ver'}" method="post">
+        <input name="id" type="hidden" th:value="${mascota.id}">
+        <span th:text="${mascota.id}"> Title </span>
+        <span th:text="${mascota.nombre}"> Title </span>
+        <span th:text="${mascota.energia}"> Author </span>
+        <button type="submit"> Ver mascota</button>
+
+      </form>
+
+      <h2>Crear nueva mascota</h2>
+      <form th:action="@{'/mascota/crearconpost'}" method="post">
+        <input name="nombre" type="text" required>
+        <button type="submit"> Crear mascota</button>
+
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- Bootstrap core js -->
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+</body>
+</html>
