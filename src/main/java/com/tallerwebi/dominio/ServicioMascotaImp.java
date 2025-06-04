@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.excepcion.MascotaExistente;
+import com.tallerwebi.dominio.excepcion.MascotaHambrientaException;
 import com.tallerwebi.presentacion.MascotaDTO;
 
 public class ServicioMascotaImp implements ServicioMascota {
@@ -13,14 +14,22 @@ public class ServicioMascotaImp implements ServicioMascota {
             Mascota mascota = new Mascota(nombre);
             usuario.setMascota(mascota);
         }
-        
+
         return new MascotaDTO(nombre);
     }
 
     @Override
     public MascotaDTO jugar(MascotaDTO mascota) {
         // TAMBIEN DEBE JUGAR CON LA MASCOTA REAL
-        mascota.jugar();
+        Mascota mascotaEntidad = null;
+
+        if (mascota.getHambre() >= 75.0) {
+            throw new MascotaHambrientaException("No podés jugar, tu mascota esta hambrienta");
+        } else {
+            mascota.jugar();
+            mascotaEntidad = mascota.aEntidad();
+            mascotaEntidad.jugar();
+        }
 
         return mascota;
     }

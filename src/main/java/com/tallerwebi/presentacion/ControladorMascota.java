@@ -1,12 +1,15 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.dominio.excepcion.MascotaHambrientaException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tallerwebi.dominio.Mascota;
 import com.tallerwebi.dominio.ServicioMascotaImp;
 import com.tallerwebi.dominio.Usuario;
 
@@ -42,10 +45,13 @@ public class ControladorMascota {
             servicioMascota.jugar(mascota);
         } catch (EnergiaInsuficiente energiaInsuficiente) {
             modelo.put("error","No podés jugar, te falta energía");
+        } catch (MascotaHambrientaException mascotaHambrientaException) {
+            modelo.put("error","No podés jugar, tu mascota esta hambrienta");
         }
 
         modelo.put("nombre", mascota.getNombre());
         modelo.put("energia", mascota.getEnergia());
+        modelo.put("hambre", mascota.getHambre());
 
         return new ModelAndView("mascota",modelo);
     }

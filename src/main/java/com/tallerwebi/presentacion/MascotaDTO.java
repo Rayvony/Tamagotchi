@@ -7,6 +7,8 @@ import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 
 public class MascotaDTO {
 
+    private static Long contadorId = 0L;
+    private Long id;
     private String nombre;
     private Double energia;
     private Double energiaADescontarPorJuego;
@@ -15,10 +17,11 @@ public class MascotaDTO {
     private LocalDateTime ultimaAlimentacion;
 
     public MascotaDTO(String nombre) {
+        this.id = ++contadorId;
         this.nombre = nombre;
         this.energia = 100.00;
         this.energiaADescontarPorJuego = 25.00;
-        this.hambre = 70.00;
+        this.hambre = 75.00;
         this.hambreADescontarPorAlimentar = 25.00; 
         this.ultimaAlimentacion = LocalDateTime.MIN; // 0000-01-01T00:00
     }

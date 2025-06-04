@@ -8,6 +8,7 @@ import com.tallerwebi.dominio.ServicioMascotaImp;
 import com.tallerwebi.dominio.Usuario;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import com.tallerwebi.dominio.excepcion.MascotaExistente;
+import com.tallerwebi.dominio.excepcion.MascotaHambrientaException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +76,6 @@ public class ControladorMascotaTest {
 
      }
      
-
     @Test
     public void queAlCrearseUnaMascotaTengaCienDeEnergiaAsignadaPorDefecto() {
         // PREPARACION
@@ -154,6 +154,8 @@ public class ControladorMascotaTest {
 
     }
 
+
+    
     @Test
     public void queUnUsuarioPresionaAlimentarYLaMascotaDisminuyaSuHambreYRegistreSuHorarioDeAlimentacion(){
         // PREPARACION 
@@ -172,10 +174,31 @@ public class ControladorMascotaTest {
 
         // VERIFICACION
         String vistaEsperada = "mascota";
-        Double hambreEsperada = 45.00; 
+        Double hambreEsperada = 50.00; 
         assertThat(modelAndView.getViewName(), equalTo(vistaEsperada));
         assertThat(modelAndView.getModel().get("hambre"), equalTo(hambreEsperada));
         assertThat(modelAndView.getModel().get("ultimaAlimentacion"), instanceOf(LocalDateTime.class));
     }
 
+
+    @Test
+    public void queAlIntentarJugarConHambreDevuelvaUnMensajeDeErrorLaVista(){
+        
+        // PREPARACION 
+        String mensajeDeErrorEsperado = "No podés jugar, tu mascota esta hambrienta";
+        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+        when(servicioMascotaMock.jugar(mascota)).thenThrow(new MascotaHambrientaException(mensajeDeErrorEsperado));
+
+        // EJECUCION
+        ModelAndView modelAndView = controladorMascota.jugar(mascota);
+
+        // VERIFICACION 
+        String vistaEsperada = "mascota";
+        Double hambreEsperada = 75.0;
+
+        assertThat(modelAndView.getViewName(), equalTo(vistaEsperada));
+        assertThat(modelAndView.getModel().get("hambre"), equalTo(hambreEsperada));
+        assertThat(modelAndView.getModel().get("error"), equalTo(mensajeDeErrorEsperado));
+        
+    }
 }
