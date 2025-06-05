@@ -7,19 +7,20 @@ public class MascotaDTO {
     private Long id;
     private String nombre;
     private Double energia;
-    private Double energiaADescontarPorJuego;
+
+    public void setEnergia(Double energia) {
+        this.energia = energia;
+    }
 
     public MascotaDTO(String nombre) {
         this.nombre = nombre;
         this.energia = 100.00;
-        this.energiaADescontarPorJuego = 30.00;
     }
 
     public MascotaDTO(Mascota mascota) {
         this.id = mascota.getId();
         this.nombre = mascota.getNombre();
         this.energia = mascota.getEnergia();
-        this.energiaADescontarPorJuego = 30.00;
     }
 
     public Long getId(){return this.id;};
@@ -46,11 +47,4 @@ public class MascotaDTO {
         return mascota;
     }
 
-    public void jugar() {
-        if(this.energia >= energiaADescontarPorJuego) {
-            this.energia -= energiaADescontarPorJuego;
-        } else{
-            throw new EnergiaInsuficiente("No podés jugar, te falta energía");
-        }
-    }
 }

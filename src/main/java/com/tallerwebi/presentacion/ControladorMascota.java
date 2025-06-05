@@ -1,6 +1,5 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.ServicioMascota;
 import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
@@ -46,7 +45,6 @@ public class ControladorMascota {
             modelo.put("error","No podés jugar, te falta energía");
         }
 
-        //modelo.put("nombre", mascota.getNombre());
         this.servicioMascota.actualizarMascota(mascota);
         modelo.put("energia", this.mascota.getEnergia());
 

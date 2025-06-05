@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.entidades.Mascota;
+import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import com.tallerwebi.presentacion.MascotaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,8 @@ public class ServicioMascotaImp implements ServicioMascota {
     private RepositorioMascota repositorioMascota;
 
     @Autowired
-    public ServicioMascotaImp(RepositorioMascota repositorioMascota){
-        this.repositorioMascota= repositorioMascota;
+    public ServicioMascotaImp(RepositorioMascota repositorioMascota) {
+        this.repositorioMascota = repositorioMascota;
     }
 
     @Override
@@ -44,9 +45,22 @@ public class ServicioMascotaImp implements ServicioMascota {
         return new MascotaDTO(nombre);
     }
 
-    public MascotaDTO jugar(MascotaDTO mascota) {
+    /*
+        public MascotaDTO jugar(MascotaDTO mascota) {
 
-        mascota.jugar();
+            mascota.jugar();
+
+            return mascota;
+        }
+      */
+    public MascotaDTO jugar(MascotaDTO mascota) {
+        Double energiaADescontarPorJuego = 30.00;
+        Double energiaActual = mascota.getEnergia();
+        if (energiaActual >= energiaADescontarPorJuego) {
+            mascota.setEnergia(energiaActual - energiaADescontarPorJuego);
+        } else {
+            throw new EnergiaInsuficiente("No podés jugar, te falta energía");
+        }
 
         return mascota;
     }
