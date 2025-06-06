@@ -2,7 +2,6 @@ package com.tallerwebi.dominio;
 
 import java.time.LocalDateTime;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,23 +15,25 @@ import com.tallerwebi.presentacion.MascotaDTO;
 public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    private static Long contadorId = 0L;
-    private Long id;
+    //private static Long contadorId = 0L;
+    //private Long id;
     @Column(length=20, nullable = false) // RESTRICCIONES EN BD
     private String nombre;
     private Double energia;
     private Double energiaADescontarPorJuego;
     private Double hambre;
     private LocalDateTime ultimaAlimentacion;
-    
+    private Double hambreADescontarPorAlimentar;   
    
 
+
     public Mascota(String nombre) {
-        this.id = ++contadorId;
+        //this.id = ++contadorId;
         this.nombre = nombre;
         this.energia = 100.00;
         this.energiaADescontarPorJuego = 25.00;
         this.hambre = 70.00;
+        this.hambreADescontarPorAlimentar = 25.00; 
         this.ultimaAlimentacion = LocalDateTime.MIN; // 0000-01-01T00:00
     }
 
@@ -58,9 +59,10 @@ public class Mascota {
         this.hambre = hambre;
     }
 
-     public void setUltimaAlimentacion(LocalDateTime now) {
+    public void setUltimaAlimentacion(LocalDateTime now) {
         this.ultimaAlimentacion = now;
     }
+
     public LocalDateTime getUltimaAlimentacion() {
         return this.ultimaAlimentacion;
     }
@@ -71,5 +73,9 @@ public class Mascota {
         } else{
             throw new EnergiaInsuficiente("No podés jugar, te falta energía");
         }
+    }
+
+    public void alimentar() {
+        this.hambre -= this.hambreADescontarPorAlimentar;
     }
 }

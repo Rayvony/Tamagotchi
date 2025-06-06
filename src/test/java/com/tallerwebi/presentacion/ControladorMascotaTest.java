@@ -153,8 +153,6 @@ public class ControladorMascotaTest {
         assertThat(modelAndView.getModel().get("error"), equalTo(mensajeDEErrorEsperado));
 
     }
-
-
     
     @Test
     public void queUnUsuarioPresionaAlimentarYLaMascotaDisminuyaSuHambreYRegistreSuHorarioDeAlimentacion(){
@@ -201,4 +199,28 @@ public class ControladorMascotaTest {
         assertThat(modelAndView.getModel().get("error"), equalTo(mensajeDeErrorEsperado));
         
     }
+
+    /*@Test
+    public void queAlPasarDosHorasLuegoDeLaUltimaAlimentacionLaMascotaAumenteSuHambre(){
+        // PREPARACION 
+        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+
+        doAnswer(invocation -> {
+            MascotaDTO m = invocation.getArgument(0);
+            m.setHambre(m.getHambre() - 25.00); 
+            m.setUltimaAlimentacion(LocalDateTime.now().minusHours(2).minusMinutes(1));
+            return m;
+        }).when(servicioMascotaMock).alimentar(mascota);
+
+        // EJECUCION
+        ModelAndView modelAndView = controladorMascota.alimentar(mascota);
+
+        // VERIFICACION
+        String vistaEsperada = "mascota";
+        Double hambreEsperada = 75.00; // La mascota aumenta su hambre en 25 puntos al pasar dos horas
+        
+        assertThat(modelAndView.getViewName(), equalTo(vistaEsperada));
+        assertThat(modelAndView.getModel().get("hambre"), equalTo(hambreEsperada));
+        
+    }*/
 }

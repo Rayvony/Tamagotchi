@@ -7,4 +7,5 @@ public interface ServicioMascota {
     public MascotaDTO crearMascota(String nombre,Usuario usuario);
     public MascotaDTO jugar(MascotaDTO mascota);
     public MascotaDTO alimentar(MascotaDTO mascota);
+    public void actualizarHambreDeMascotas();
 }

@@ -1,5 +1,4 @@
-package com.tallerwebi.config;
-
+package com.tallerwebi.infraestructura.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -12,15 +11,15 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-public class HibernateConfig {
+public class HibernateTestInfraestructuraConfig {
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
         dataSource.setUrl("jdbc:hsqldb:mem:db_");
-        dataSource.setUsername("sa"); // ACA DEBO COLOCAR EL USUARIO DE LA BD MIA VERDAD? "ROOT" 
-        dataSource.setPassword(""); // CONTRASEÑA VACIA
+        dataSource.setUsername("sa");
+        dataSource.setPassword("");
         return dataSource;
     }
 
@@ -43,7 +42,7 @@ public class HibernateConfig {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create"); // update
         return properties;
     }
 }

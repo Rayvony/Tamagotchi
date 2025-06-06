@@ -1,5 +1,10 @@
 package com.tallerwebi.dominio;
 
+import java.time.LocalDateTime;
+
+import org.springframework.cglib.core.Local;
+import org.springframework.scheduling.annotation.Scheduled;
+
 import com.tallerwebi.dominio.excepcion.MascotaExistente;
 import com.tallerwebi.dominio.excepcion.MascotaHambrientaException;
 import com.tallerwebi.presentacion.MascotaDTO;
@@ -36,9 +41,19 @@ public class ServicioMascotaImp implements ServicioMascota {
 
     @Override
     public MascotaDTO alimentar(MascotaDTO mascota) {
-
+        
         mascota.alimentar();
+        mascota.setUltimaAlimentacion(LocalDateTime.now());
 
         return mascota;
+    }
+
+    @Override
+   @Scheduled(cron = "0 0 * * * *") 
+    public void actualizarHambreDeMascotas()  {
+    // buscar todas las mascotas
+    // calcular si pasó el tiempo suficiente desde la última alimentación
+    // aumentar el hambre si corresponde
+    // guardar los cambios
     }
 }
