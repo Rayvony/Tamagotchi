@@ -1,10 +1,12 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.entidades;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 
 @Entity
 public class Usuario {
@@ -16,7 +18,7 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
-    @Transient
+    @OneToOne
     private Mascota mascota;
 
     public Long getId() {

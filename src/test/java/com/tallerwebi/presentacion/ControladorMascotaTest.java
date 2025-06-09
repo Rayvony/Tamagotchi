@@ -3,12 +3,12 @@ package com.tallerwebi.presentacion;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tallerwebi.dominio.Mascota;
-import com.tallerwebi.dominio.ServicioMascotaImp;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.entidades.Mascota;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import com.tallerwebi.dominio.excepcion.MascotaExistente;
 import com.tallerwebi.dominio.excepcion.MascotaHambrientaException;
+import com.tallerwebi.dominio.implementaciones.ServicioMascotaImp;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,10 +99,6 @@ public class ControladorMascotaTest {
         Double energiaEsperada = 75.00;
 
         MascotaDTO mascota = new MascotaDTO("tamagotcha");
-
-
-        // SUGERENCIA DE LA IA || PREGUNTARLE A GER | COMO EL METODO NO DEVUELVE NADA DEBE EXISTIR OTRA FORMA DE 
-        // SIMULAR EL JUGAR 
         
         doAnswer(invocation -> {
             MascotaDTO m = invocation.getArgument(0);
@@ -200,27 +196,6 @@ public class ControladorMascotaTest {
         
     }
 
-    /*@Test
-    public void queAlPasarDosHorasLuegoDeLaUltimaAlimentacionLaMascotaAumenteSuHambre(){
-        // PREPARACION 
-        MascotaDTO mascota = new MascotaDTO("tamagotcha");
+    
 
-        doAnswer(invocation -> {
-            MascotaDTO m = invocation.getArgument(0);
-            m.setHambre(m.getHambre() - 25.00); 
-            m.setUltimaAlimentacion(LocalDateTime.now().minusHours(2).minusMinutes(1));
-            return m;
-        }).when(servicioMascotaMock).alimentar(mascota);
-
-        // EJECUCION
-        ModelAndView modelAndView = controladorMascota.alimentar(mascota);
-
-        // VERIFICACION
-        String vistaEsperada = "mascota";
-        Double hambreEsperada = 75.00; // La mascota aumenta su hambre en 25 puntos al pasar dos horas
-        
-        assertThat(modelAndView.getViewName(), equalTo(vistaEsperada));
-        assertThat(modelAndView.getModel().get("hambre"), equalTo(hambreEsperada));
-        
-    }*/
 }

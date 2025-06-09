@@ -1,15 +1,25 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.implementaciones;
 
 import java.time.LocalDateTime;
 
-import org.springframework.cglib.core.Local;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tallerwebi.dominio.RepositorioMascota;
+import com.tallerwebi.dominio.ServicioMascota;
+import com.tallerwebi.dominio.entidades.Mascota;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.MascotaExistente;
 import com.tallerwebi.dominio.excepcion.MascotaHambrientaException;
 import com.tallerwebi.presentacion.MascotaDTO;
 
 public class ServicioMascotaImp implements ServicioMascota {
+
+    private RepositorioMascota repositorioMascota;
+
+    @Autowired
+    public ServicioMascotaImp(RepositorioMascota repositorioMascota) {
+        this.repositorioMascota = repositorioMascota;
+    }
 
     @Override
     public MascotaDTO crearMascota(String nombre, Usuario usuario) {
@@ -41,19 +51,26 @@ public class ServicioMascotaImp implements ServicioMascota {
 
     @Override
     public MascotaDTO alimentar(MascotaDTO mascota) {
-        
+
         mascota.alimentar();
         mascota.setUltimaAlimentacion(LocalDateTime.now());
 
         return mascota;
     }
 
-    @Override
-   @Scheduled(cron = "0 0 * * * *") 
-    public void actualizarHambreDeMascotas()  {
-    // buscar todas las mascotas
-    // calcular si pasó el tiempo suficiente desde la última alimentación
-    // aumentar el hambre si corresponde
-    // guardar los cambios
-    }
+   @Override
+    public void actualizarHambreDeMascotas(){}
+    
+    // METOOD PARA AUMENTAR EL HAMBRE CADA 15 MIN Y EN 2HS SEAN 25.00 PTOS HASTA LLEGAR A 100.00
+    //@Scheduled(cron = "0 */15 * * * *") // cada 15 minutos
+    //public void actualizarHambreDeMascotas() {
+        //List<Mascota> mascotas = repositorioMascota.obtenerTodas();
+        //for (Mascota mascota : mascotas) {
+      //      double nuevoHambre = Math.min(mascota.getHambre() + 3.125, 100.0);
+      //      mascota.setHambre(nuevoHambre);
+     //       repositorioMascota.actualizar(mascota);
+      //  }
+    //}
+
+    
 }

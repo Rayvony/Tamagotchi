@@ -1,4 +1,4 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.entidades;
 
 import java.time.LocalDateTime;
 
@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import com.tallerwebi.presentacion.MascotaDTO;
@@ -16,16 +17,17 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     //private static Long contadorId = 0L;
-    //private Long id;
-    @Column(length=20, nullable = false) // RESTRICCIONES EN BD
+    private Long id;
+    @Column(length = 20, nullable = false) // RESTRICCIONES EN BD
     private String nombre;
     private Double energia;
     private Double energiaADescontarPorJuego;
     private Double hambre;
     private LocalDateTime ultimaAlimentacion;
-    private Double hambreADescontarPorAlimentar;   
+    private Double hambreADescontarPorAlimentar; 
+     
    
-
+    public Mascota(){}
 
     public Mascota(String nombre) {
         //this.id = ++contadorId;

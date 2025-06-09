@@ -2,13 +2,10 @@ package com.tallerwebi.presentacion;
 
 import java.time.LocalDateTime;
 
-import com.tallerwebi.dominio.Mascota;
+import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 
 public class MascotaDTO {
-
-    private static Long contadorId = 0L;
-    private Long id;
     private String nombre;
     private Double energia;
     private Double energiaADescontarPorJuego;
@@ -17,7 +14,6 @@ public class MascotaDTO {
     private LocalDateTime ultimaAlimentacion;
 
     public MascotaDTO(String nombre) {
-        this.id = ++contadorId;
         this.nombre = nombre;
         this.energia = 100.00;
         this.energiaADescontarPorJuego = 25.00;
