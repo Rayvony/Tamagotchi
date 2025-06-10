@@ -8,7 +8,7 @@ import java.util.List;
 
 @Transactional
 public interface ServicioMascota {
-    Boolean crear(MascotaDTO mascota);
+    MascotaDTO crear(MascotaDTO mascota);
     List<Mascota> traerMascotas();
     MascotaDTO traerUnaMascota(Long id);
     Boolean actualizarMascota(MascotaDTO mascota);

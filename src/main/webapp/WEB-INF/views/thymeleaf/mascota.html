@@ -29,8 +29,7 @@
       <div class="pet">
         <img th:src="@{/img/huevo.png}" alt="Pet" class="pet-image" />
       </div>
-      <h1 th:text="'Energia: ' + ${energia}"></h1>
-      <h1 th:text="'Nombre: ' + ${nombre}"></h1>
+      <h2 th:text="'Nombre: ' + ${mascota.nombre} + ${mascota.energia}"></h2>
       <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
     </div>
 
@@ -45,7 +44,7 @@
 
     <div class="button-container">
       <form action="/spring/mascota/jugar" method="post">
-
+        <input name="id" type="hidden" th:value="${mascota.id}">
         <button class="button">
           <img class="icon" th:src="@{/img/game-black.png}" />
         </button>

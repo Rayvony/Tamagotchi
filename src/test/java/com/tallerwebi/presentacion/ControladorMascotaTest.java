@@ -12,7 +12,19 @@ import static org.hamcrest.Matchers.equalTo;
 
 
 public class ControladorMascotaTest {
+/*
+    @Test
+    public void queAlSolicitarLaPantallaDeInventarioSeMuestreLaVistaInventario(){
+        // preparacion
 
+        // ejecucion
+        ModelAndView mav = this.controladorInventario.irAInventario();
 
+        String message = mav.getModel().get("message").toString();
 
+        // verificacion
+        assertThat(mav.getViewName(), equalToIgnoringCase("inventario")); // Vista correcta
+        assertThat(message, equalToIgnoringCase("Bienvenido")); // Exista un mensaje de bienvenida
+    }
+*/
 }

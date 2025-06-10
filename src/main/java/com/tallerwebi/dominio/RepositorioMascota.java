@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface RepositorioMascota {
-    Boolean crear(Mascota obtenerEntidad);
+    Long crear(Mascota obtenerEntidad);
     Mascota obtenerPor(Long id);
     List<Mascota> obtenerListaDeMascotas();
     void actualizar(Mascota mascota);

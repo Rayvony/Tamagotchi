@@ -6,10 +6,13 @@ import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -18,7 +21,6 @@ public class ControladorMascota {
 
     private ServicioMascota servicioMascota;
     private ModelMap modelo = new ModelMap();
-    private MascotaDTO mascota;
 
     @Autowired
     public ControladorMascota(ServicioMascota servicioMascota) {
@@ -27,26 +29,26 @@ public class ControladorMascota {
 
     @RequestMapping(path = "/mascota/crearconpost", method = RequestMethod.POST)
     public ModelAndView crearMascota(String nombre) {
-        //crea el DTO esto es necesario?
-        this.mascota = servicioMascota.crearMascota(nombre);
+        MascotaDTO mascotaAGuardar = servicioMascota.crearMascota(nombre);
+
         //guarda en bd
-        this.servicioMascota.crear(this.mascota);
-        modelo.put("nombre", mascota.getNombre());
-        modelo.put("energia", mascota.getEnergia());
+        MascotaDTO mascotaGuardada = this.servicioMascota.crear(mascotaAGuardar);
+        modelo.put("mascota", mascotaGuardada);
         return new ModelAndView("mascota", modelo);
     }
 
     @RequestMapping(path = "/mascota/jugar", method = RequestMethod.POST)
-    public ModelAndView jugar() {
-
+    public ModelAndView jugar(Long id) {
+        MascotaDTO mascota= servicioMascota.traerUnaMascota(id);
         try {
-            servicioMascota.jugar(this.mascota);
+            mascota = servicioMascota.jugar(mascota);
         } catch (EnergiaInsuficiente energiaInsuficiente) {
             modelo.put("error","No podés jugar, te falta energía");
         }
 
+        //actualiza en bd
         this.servicioMascota.actualizarMascota(mascota);
-        modelo.put("energia", this.mascota.getEnergia());
+        modelo.put("mascota", mascota);
 
         return new ModelAndView("mascota",modelo);
     }
@@ -60,11 +62,8 @@ public class ControladorMascota {
 
     @RequestMapping(path = "/mascota/ver", method = RequestMethod.POST)
     public ModelAndView verMascota(Long id) {
-
-        this.mascota = servicioMascota.traerUnaMascota(id);
-
-        modelo.put("nombre", mascota.getNombre());
-        modelo.put("energia", mascota.getEnergia());
+        MascotaDTO mascota = servicioMascota.traerUnaMascota(id);
+        modelo.put("mascota", mascota);
         return new ModelAndView("mascota", modelo);
     }
 }

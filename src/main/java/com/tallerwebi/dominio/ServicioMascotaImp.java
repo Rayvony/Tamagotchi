@@ -19,8 +19,9 @@ public class ServicioMascotaImp implements ServicioMascota {
     }
 
     @Override
-    public Boolean crear(MascotaDTO mascota) {
-        return this.repositorioMascota.crear(mascota.obtenerEntidad());
+    public MascotaDTO crear(MascotaDTO mascota) {
+        MascotaDTO mascotaCreada = this.traerUnaMascota(this.repositorioMascota.crear(mascota.obtenerEntidad()));
+        return mascotaCreada;
     }
 
     @Override
@@ -45,16 +46,8 @@ public class ServicioMascotaImp implements ServicioMascota {
         return new MascotaDTO(nombre);
     }
 
-    /*
-        public MascotaDTO jugar(MascotaDTO mascota) {
-
-            mascota.jugar();
-
-            return mascota;
-        }
-      */
     public MascotaDTO jugar(MascotaDTO mascota) {
-        Double energiaADescontarPorJuego = 30.00;
+        Double energiaADescontarPorJuego = 25.00;
         Double energiaActual = mascota.getEnergia();
         if (energiaActual >= energiaADescontarPorJuego) {
             mascota.setEnergia(energiaActual - energiaADescontarPorJuego);

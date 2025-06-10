@@ -1,16 +1,11 @@
 package com.tallerwebi.dominio.entidades;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+import com.tallerwebi.dominio.Usuario;
+
+import javax.persistence.*;
 
 @Entity
-// @Table(name = "card") // Vincula una tabla existente o ajusta el nombre
+
 public class Mascota {
 
     @Id
@@ -21,6 +16,9 @@ public class Mascota {
     private String nombre;
     @Column
     private Double energia;
+
+    @ManyToOne
+    Usuario usuario;
 
     public Mascota(){};
     public Mascota(Long id, String nombre, Double energia) {

@@ -20,9 +20,9 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
     }
 
     @Override
-    public Boolean crear(Mascota mascota) {
-        this.sessionFactory.getCurrentSession().save(mascota);
-        return true;
+    public Long crear(Mascota mascota) {
+        Long idMascotaCreada = (Long)this.sessionFactory.getCurrentSession().save(mascota);
+        return idMascotaCreada;
     }
 
     @Override
