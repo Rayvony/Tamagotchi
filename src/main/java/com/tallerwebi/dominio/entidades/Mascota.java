@@ -36,7 +36,8 @@ public class Mascota {
         this.energiaADescontarPorJuego = 25.00;
         this.hambre = 70.00;
         this.hambreADescontarPorAlimentar = 25.00; 
-        this.ultimaAlimentacion = LocalDateTime.MIN; // 0000-01-01T00:00
+        this.ultimaAlimentacion = LocalDateTime.of(1970, 1, 1, 0, 0); // Fecha segura
+        // CREO QUE ME SALTA ERROR this.ultimaAlimentacion = LocalDateTime.MIN; // 0000-01-01T00:00
     }
 
     // NO LE ESTOY PASANDO LOS VALORES ACUTALIZADOS // PODRIA RESOLVERLO PASANDO POR PARAMETRO EL OBJETO

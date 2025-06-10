@@ -178,7 +178,6 @@
                     </webApp>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

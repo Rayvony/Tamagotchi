@@ -14,68 +14,35 @@
 </head>
 
 <body>
+  <h1>Tamagotchi</h1>
+  <h2>¡Bienvenido, [[${nombreDeUsuario}]]!</h2>
 <main role="main" class="container">
   <div class="container">
-    <div class="bar-container">
-      <div class="bar energy">
-        <img class="icon" th:src="@{/img/energy.png}" />
+    <!-- Botón que muestra el formulario -->
+    <button id="btnCrearMascota" class="btn btn-lg btn-primary btn-block">Crear Mascota</button>
+
+    <!-- Formulario oculto por defecto -->
+    <form id="formCrearMascota" th:action="@{/crear-mascota}" method="post" style="display: none; margin-top: 1rem;">
+      <div class="mb-3">
+        <label for="nombreMascota" class="form-label">Nombre de la Mascota</label>
+        <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" required />
       </div>
-      <div class="bar happiness">
-        <img class="icon" th:src="@{/img/happiness.png}" />
-      </div>
-    </div>
+      <button type="submit" class="btn btn-success">Nombrar</button>
+    </form>
 
-    <div class="pet-container">
-      <div class="pet">
-        <img th:src="@{/img/huevo.png}" alt="Pet" class="pet-image" />
-      </div>
-    </div>
-
-    <div class="bar-container">
-      <div class="bar hunger">
-        <img class="icon" th:src="@{/img/hunger.png}" />
-      </div>
-      <div class="bar cleanliness">
-        <img class="icon" th:src="@{/img/cleanliness.png}" />
-      </div>
-    </div>
-
-    <div class="button-container">
-      <form action="/ruta1" method="post">
-        <button class="button">
-          <img class="icon" th:src="@{/img/game-black.png}" />
-        </button>
-      </form>
-
-      <form action="/ruta2" method="post">
-        <button class="button">
-          <img class="icon" th:src="@{/img/medicine-black.png}" />
-        </button>
-      </form>
-
-      <form action="/ruta3" method="post">
-        <button class="button">
-          <img class="icon" th:src="@{/img/bath-black.png}" />
-        </button>
-      </form>
-
-      <form action="/ruta4" method="post">
-        <button class="button">
-          <img class="icon" th:src="@{/img/lightOn-black.png}" />
-        </button>
-      </form>
-
-      <form action="/ruta5" method="post">
-        <button class="button">
-          <img class="icon" th:src="@{/img/food-black.png}" />
-        </button>
-      </form>
-
-    </div>
+    <button class="btn btn-lg btn-primary btn-block mt-3" th:href="@{/jugar}">Jugar</button>
   </div>
 </main>
 
-  <!-- Bootstrap core js -->
-  <script type="text/javascript" th:src="@{/webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
-</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const btnCrear = document.getElementById("btnCrearMascota");
+    const form = document.getElementById("formCrearMascota");
+
+    btnCrear.addEventListener("click", function () {
+      form.style.display = form.style.display === "none" ? "block" : "none";
+    });
+  });
+</script>
+
 </html>

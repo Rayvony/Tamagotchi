@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tallerwebi.dominio.RepositorioMascota;
 import com.tallerwebi.dominio.entidades.Mascota;
+import com.tallerwebi.dominio.entidades.Usuario;
 
 @Repository
 public class RepositorioMascotaImpl implements RepositorioMascota {
@@ -18,9 +19,19 @@ public class RepositorioMascotaImpl implements RepositorioMascota {
     }
 
     @Override
-    public Boolean crear(Mascota mascota) {
+    public Boolean crearMascota(Mascota mascota, Usuario usuario) {
         this.sessionFactory.getCurrentSession().save(mascota);
         return true;
     }
+
+    /* CAPAZ NO HACE FALTA POR LAS NOTACIONES
+    @Override
+    public void guardarMascotaEnUsuario(Mascota mascota, Usuario usuario) {
+        String hql = "UPDATE Usuario SET nombre = :nombre FROM Carta WHERE id = :id ";
+        Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+
+    }*/
+
+
     
 }

@@ -31,7 +31,7 @@ public class ServicioMascotaTest {
     public void cuandoCreoUnaMascotaEntoncesObtengoUnResultadoExitoso() {
         Mascota mascota = new Mascota("Firulais");
         Usuario usuario = new Usuario();
-        when(this.repositorioMascota.crear(mascota)).thenReturn(true);
+        when(this.repositorioMascota.crearMascota(mascota,usuario)).thenReturn(true);
 
         MascotaDTO mascotaCreadaSatisfactoriamente = this.servicioMascota.crearMascota(mascota.getNombre(), usuario);
 
