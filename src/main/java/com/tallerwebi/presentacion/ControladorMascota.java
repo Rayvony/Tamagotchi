@@ -23,17 +23,19 @@ public class ControladorMascota {
         this.servicioMascota = servicioMascota;
     }
     
+    @RequestMapping(path = "/mascota", method = RequestMethod.GET)
+    public ModelAndView irAMascota(HttpSession session) {
+        return new ModelAndView("mascota");
+    }
+
     @RequestMapping(path = "/crear-mascota", method = RequestMethod.POST)
     public ModelAndView crearMascota(@RequestParam("nombreMascota") String nombreMascota, Usuario usuario) {
 
         // PARAMETRO QUE ELIMINE HttpSession session
         //Long id_usuario = (Long) session.getAttribute("id");
 
-        ModelMap modelo = new ModelMap();
-
         MascotaDTO mascotaDTO = this.servicioMascota.crearMascota(nombreMascota, usuario);
 
-        modelo.put("nombreMascota", mascotaDTO.getNombre());
-        return new ModelAndView("redirect:/mascota", modelo);
+        return new ModelAndView("redirect:/mascota");
     }
 }

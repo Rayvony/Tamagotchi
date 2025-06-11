@@ -36,9 +36,8 @@ public class ControladorMascotaTest {
         ModelAndView modelAndView = controladorMascota.crearMascota(nombreMascota, usuarioPrueba);
 
         String vistaEsperada = "redirect:/mascota";
-        String nombreMascotaEsperado = "Firulais";
+       
         assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
-        assertThat(nombreMascotaEsperado, equalTo(modelAndView.getModel().get("nombreMascota")));
 
     }
 }
