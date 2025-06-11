@@ -37,9 +37,8 @@ public class ServicioMascotaImp implements ServicioMascota {
     }
 
     @Override
-    public Boolean actualizarMascota(MascotaDTO mascota) {
+    public void actualizarMascota(MascotaDTO mascota) {
         this.repositorioMascota.actualizar(mascota.obtenerEntidad());
-        return null;
     }
 
     public MascotaDTO crearMascota(String nombre) {
@@ -51,6 +50,8 @@ public class ServicioMascotaImp implements ServicioMascota {
         Double energiaActual = mascota.getEnergia();
         if (energiaActual >= energiaADescontarPorJuego) {
             mascota.setEnergia(energiaActual - energiaADescontarPorJuego);
+            //actualizamos en base de datos
+            this.actualizarMascota(mascota);
         } else {
             throw new EnergiaInsuficiente("No podés jugar, te falta energía");
         }

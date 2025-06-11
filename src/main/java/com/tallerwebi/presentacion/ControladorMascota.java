@@ -47,7 +47,7 @@ public class ControladorMascota {
         }
 
         //actualiza en bd
-        this.servicioMascota.actualizarMascota(mascota);
+        //this.servicioMascota.actualizarMascota(mascota);
         modelo.put("mascota", mascota);
 
         return new ModelAndView("mascota",modelo);

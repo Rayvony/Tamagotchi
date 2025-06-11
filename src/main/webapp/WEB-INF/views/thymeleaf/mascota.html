@@ -29,7 +29,12 @@
       <div class="pet">
         <img th:src="@{/img/huevo.png}" alt="Pet" class="pet-image" />
       </div>
-      <h2 th:text="'Nombre: ' + ${mascota.nombre} + ${mascota.energia}"></h2>
+      <h2 th:text="'Nombre: ' + ${mascota.nombre} + 'Energia:' + ${mascota.energia}"></h2><br>
+      <h2 th:text="'Salud: ' + ${mascota.salud} + 'higiene:' + ${mascota.higiene}"></h2><br>
+      <h2 th:text="'Felicidad: ' + ${mascota.felicidad} + 'Hambre:' + ${mascota.hambre}"></h2><br>
+      <h2 th:text="'Esta vivo?: ' + ${mascota.estaVivo}"></h2>
+
+
       <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
     </div>
 

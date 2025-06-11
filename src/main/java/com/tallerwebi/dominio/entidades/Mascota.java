@@ -16,15 +16,30 @@ public class Mascota {
     private String nombre;
     @Column
     private Double energia;
+    @Column
+    private Double higiene;
+    @Column
+    private Double salud;
+    @Column
+    private Double felicidad;
+    @Column
+    private Double hambre;
+    @Column
+    private Boolean estaVivo;
 
     @ManyToOne
     Usuario usuario;
 
     public Mascota(){};
-    public Mascota(Long id, String nombre, Double energia) {
+    public Mascota(Long id, String nombre, Double energia, Double higiene,Double salud,Double felicidad,Double hambre,Boolean estaVivo) {
         this.id = id;
         this.nombre = nombre;
         this.energia = energia;
+        this.higiene=higiene;
+        this.salud=salud;
+        this.felicidad=felicidad;
+        this.hambre= hambre;
+        this.estaVivo=estaVivo;
     }
 
     public Long getId() {
@@ -51,5 +66,43 @@ public class Mascota {
         this.nombre = nombre;
     }
 
+    public Double getHigiene() {
+        return higiene;
+    }
 
+    public void setHigiene(Double higiene) {
+        this.higiene = higiene;
+    }
+
+    public Double getSalud() {
+        return salud;
+    }
+
+    public void setSalud(Double salud) {
+        this.salud = salud;
+    }
+
+    public Double getFelicidad() {
+        return felicidad;
+    }
+
+    public void setFelicidad(Double felicidad) {
+        this.felicidad = felicidad;
+    }
+
+    public Double getHambre() {
+        return hambre;
+    }
+
+    public void setHambre(Double hambre) {
+        this.hambre = hambre;
+    }
+
+    public Boolean getEstaVivo() {
+        return estaVivo;
+    }
+
+    public void setEstaVivo(Boolean estaVivo) {
+        this.estaVivo = estaVivo;
+    }
 }

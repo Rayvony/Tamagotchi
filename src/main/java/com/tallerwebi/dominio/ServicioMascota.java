@@ -11,7 +11,7 @@ public interface ServicioMascota {
     MascotaDTO crear(MascotaDTO mascota);
     List<Mascota> traerMascotas();
     MascotaDTO traerUnaMascota(Long id);
-    Boolean actualizarMascota(MascotaDTO mascota);
+    void actualizarMascota(MascotaDTO mascota);
 
     MascotaDTO crearMascota(String nombre);
     MascotaDTO jugar(MascotaDTO mascota);////A borrar

@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioMascota;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,22 +10,36 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class ControladorMascotaTest {
-/*
-    @Test
-    public void queAlSolicitarLaPantallaDeInventarioSeMuestreLaVistaInventario(){
-        // preparacion
+    private ServicioMascota servicioMascotaMock;
+    private ControladorMascota controladorMascota;
 
-        // ejecucion
-        ModelAndView mav = this.controladorInventario.irAInventario();
-
-        String message = mav.getModel().get("message").toString();
-
-        // verificacion
-        assertThat(mav.getViewName(), equalToIgnoringCase("inventario")); // Vista correcta
-        assertThat(message, equalToIgnoringCase("Bienvenido")); // Exista un mensaje de bienvenida
+    @BeforeEach
+    public void inicializar() {
+        servicioMascotaMock = mock(ServicioMascota.class);
+        controladorMascota = new ControladorMascota(servicioMascotaMock);
     }
-*/
+
+
+    @Test
+    public void queSePuedaCrearUnaMascotaConUnNombre(){
+
+        //Usuario usuarioPrueba = new Usuario();
+        String nombreMascota = "Firulais";
+        MascotaDTO mascotaDTOPrueba = new MascotaDTO(nombreMascota);
+        when(this.servicioMascotaMock.crearMascota(anyString())).thenReturn(mascotaDTOPrueba);
+
+        ModelAndView modelAndView = controladorMascota.crearMascota(nombreMascota);
+
+        String vistaEsperada = "mascota";
+
+        assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
+
+    }
+
 }
