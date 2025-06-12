@@ -62,7 +62,8 @@
         </button>
       </form>
 
-      <form action="/ruta3" method="post">
+      <form action="/spring/mascota/limpiar" method="post">
+        <input name="id" type="hidden" th:value="${mascota.id}">
         <button class="button">
           <img class="icon" th:src="@{/img/bath-black.png}" />
         </button>

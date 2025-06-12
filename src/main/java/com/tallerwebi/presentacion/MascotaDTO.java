@@ -103,7 +103,11 @@ public class MascotaDTO {
         mascota.setFelicidad(this.felicidad);
         mascota.setHambre(this.hambre);
         mascota.setEstaVivo(this.estaVivo);
+        mascota.setUltimaHigiene(this.ultimaHigiene);
         return mascota;
     }
 
+    public void setId(Long idMascota) {
+        this.id = idMascota;
+    }
 }

@@ -69,6 +69,7 @@ public class ServicioMascotaImp implements ServicioMascota {
             throw new LimpiezaMaximaException("La higiene ya se encuentra al máximo");
         } else {
             mascota.setHigiene(100.0);
+            mascota.setUltimaHigiene(LocalDateTime.now());
             this.actualizarMascota(mascota);
             return mascota;
         }
