@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioMascota;
+import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.dominio.excepcion.EnergiaMaxima;
 import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -83,8 +85,37 @@ public class ControladorMascotaTest {
 
     }
 
+    @Test
+    public void queAlDormirLaMascotaSeMuestreLaVistaCorrecta () throws EnergiaMaxima {
+        Long idMascota = 1L;
+        MascotaDTO mascotaDePrueba = new MascotaDTO("Firulais");
+        mascotaDePrueba.setId(idMascota);
 
+        when(this.servicioMascotaMock.traerUnaMascota(anyLong())).thenReturn(mascotaDePrueba);
+        when(this.servicioMascotaMock.dormir(mascotaDePrueba)).thenReturn(mascotaDePrueba);
 
+        ModelAndView modelAndView = controladorMascota.limpiarMascota(idMascota);
+
+        assertThat(modelAndView.getViewName(), equalTo("mascota"));
+        assertThat(modelAndView.getModel().get("mascota"), equalTo(mascotaDePrueba));
+    }
+
+    @Test
+    public void queAlJugarLaMascotaSeMuestreLaVistaCorrecta () throws EnergiaInsuficiente {
+        Long idMascota = 1L;
+        MascotaDTO mascotaDePrueba = new MascotaDTO("Firulais");
+        mascotaDePrueba.setId(idMascota);
+
+        when(this.servicioMascotaMock.traerUnaMascota(anyLong())).thenReturn(mascotaDePrueba);
+        when(this.servicioMascotaMock.jugar(mascotaDePrueba)).thenReturn(mascotaDePrueba);
+
+        ModelAndView modelAndView = controladorMascota.limpiarMascota(idMascota);
+
+        assertThat(modelAndView.getViewName(), equalTo("mascota"));
+        assertThat(modelAndView.getModel().get("mascota"), equalTo(mascotaDePrueba));
+    }
+
+    
 
 
 }
