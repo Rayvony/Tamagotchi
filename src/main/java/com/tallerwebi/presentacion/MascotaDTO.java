@@ -19,7 +19,6 @@ public class MascotaDTO {
     private LocalDateTime ultimaHigiene;
     private LocalDateTime ultimaSiesta;
 
-
     public void setEnergia(Double energia) {
         this.energia = energia;
     }
@@ -28,7 +27,9 @@ public class MascotaDTO {
         this.hambre = hambre;
     }
 
-    public void setFelicidad(Double felicidad) { this.felicidad = felicidad; }
+    public void setFelicidad(Double felicidad) {
+        this.felicidad = felicidad;
+    }
 
     public MascotaDTO(String nombre) {
         this.nombre = nombre;
@@ -38,7 +39,7 @@ public class MascotaDTO {
         this.felicidad = 100.00;
         this.hambre = 100.00;
         this.estaVivo = true;
-        this.ultimaSiesta = LocalDateTime.now() ;
+        this.ultimaSiesta = LocalDateTime.now();
         this.ultimaHigiene = LocalDateTime.now();
         this.ultimaAlimentacion = LocalDateTime.now();
     }
@@ -49,12 +50,17 @@ public class MascotaDTO {
         this.energia = mascota.getEnergia();
         this.higiene = mascota.getHigiene();
         this.salud = mascota.getSalud();
-        this.felicidad=mascota.getFelicidad();
-        this.hambre= mascota.getHambre();
+        this.felicidad = mascota.getFelicidad();
+        this.hambre = mascota.getHambre();
         this.estaVivo = mascota.getEstaVivo();
+        this.ultimaSiesta = mascota.getUltimaSiesta();
+        this.ultimaHigiene = mascota.getUltimaHigiene();
+        this.ultimaAlimentacion = mascota.getUltimaAlimentacion();
     }
 
-    public Long getId(){return this.id;};
+    public Long getId() {
+        return this.id;
+    };
 
     public String getNombre() {
         return this.nombre;
@@ -84,8 +90,6 @@ public class MascotaDTO {
         return estaVivo;
     }
 
-
-
     public void setHigiene(Double higiene) {
         this.higiene = higiene;
     }
@@ -98,13 +102,13 @@ public class MascotaDTO {
         this.ultimaHigiene = ultimaHigiene;
     }
 
-    public Mascota obtenerEntidad(){
+    public Mascota obtenerEntidad() {
         Mascota mascota = new Mascota();
         return this.obtenerEntidad(mascota);
     }
 
-    public Mascota obtenerEntidad(Mascota mascota){
-        if(this.id != null){
+    public Mascota obtenerEntidad(Mascota mascota) {
+        if (this.id != null) {
             mascota.setId(this.id);
         }
         mascota.setNombre(this.nombre);
@@ -123,10 +127,10 @@ public class MascotaDTO {
     public void setUltimaSiesta(LocalDateTime ultimaSiesta) {
         this.ultimaSiesta = ultimaSiesta;
     }
+
     public void setId(Long idMascota) {
         this.id = idMascota;
     }
-
 
     public void setUltimaAlimentacion(LocalDateTime now) {
         this.ultimaAlimentacion = now;
