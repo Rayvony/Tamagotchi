@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
+import com.tallerwebi.dominio.excepcion.EnergiaMaxima;
 import com.tallerwebi.presentacion.MascotaDTO;
 
 import javax.transaction.Transactional;
@@ -22,6 +23,8 @@ public interface ServicioMascota {
     MascotaDTO limpiarMascota(MascotaDTO mascotaDTO) throws LimpiezaMaximaException;
 
     MascotaDTO actualizarHigiene(MascotaDTO mascotaDTO, LocalDateTime horaActual);
+
+    MascotaDTO dormir(MascotaDTO mascota) throws EnergiaMaxima; ////A borrar
 }
 
 

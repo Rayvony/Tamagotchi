@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
 import com.tallerwebi.dominio.excepcion.MascotaSatisfecha;
 
+import com.tallerwebi.dominio.excepcion.EnergiaMaxima;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -100,4 +101,21 @@ public class ControladorMascota {
 
         return new ModelAndView("mascota",modelo);
     }
+
+    @RequestMapping(path = "/mascota/dormir", method = RequestMethod.POST)
+    public ModelAndView dormir(Long id) {
+        MascotaDTO mascota= servicioMascota.traerUnaMascota(id);
+        try {
+            mascota = servicioMascota.dormir(mascota);
+        } catch (EnergiaMaxima energiaMaxima) {
+            modelo.put("error","No se puede dormir porque no tiene sueño");
+        }
+
+        //actualiza en bd
+        //this.servicioMascota.actualizarMascota(mascota);
+        modelo.put("mascota", mascota);
+
+        return new ModelAndView("mascota",modelo);
+    }
+
 }

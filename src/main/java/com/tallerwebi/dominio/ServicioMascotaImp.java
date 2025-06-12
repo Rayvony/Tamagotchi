@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import com.tallerwebi.dominio.excepcion.MascotaSatisfecha;
 import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
+import com.tallerwebi.dominio.excepcion.EnergiaMaxima;
 import com.tallerwebi.presentacion.MascotaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,22 @@ public class ServicioMascotaImp implements ServicioMascota {
             this.actualizarMascota(mascota);
         } else {
             throw new EnergiaInsuficiente("No podés jugar, te falta energía");
+        }
+
+        return mascota;
+    }
+
+    @Override
+    public MascotaDTO dormir(MascotaDTO mascota) throws EnergiaMaxima {
+        Double energiaASumar = 25.00;
+        Double energiaActual = mascota.getEnergia();
+        if (energiaActual < 100.00) {
+            mascota.setEnergia(Math.min(100.00, energiaActual + energiaASumar));
+            mascota.setUltimaSiesta(LocalDateTime.now());
+            //actualizamos en base de datos
+            this.actualizarMascota(mascota);
+        } else {
+            throw new EnergiaMaxima("No se puede dormir porque no tiene sueño");
         }
 
         return mascota;

@@ -29,6 +29,9 @@ public class Mascota {
     @Column
     private Boolean estaVivo;
     @Column
+    private LocalDateTime ultimaSiesta;
+
+    @Column
     private LocalDateTime ultimaAlimentacion;
 
     @Column
@@ -49,6 +52,7 @@ public class Mascota {
         this.estaVivo=estaVivo;
         this.ultimaAlimentacion = LocalDateTime.now();
         this.ultimaHigiene = LocalDateTime.now();
+        this.ultimaSiesta = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -114,6 +118,10 @@ public class Mascota {
     public void setEstaVivo(Boolean estaVivo) {
         this.estaVivo = estaVivo;
     }
+
+    public void setUltimaSiesta(LocalDateTime ultimaSiesta) {this.ultimaSiesta = ultimaSiesta; }
+
+    public LocalDateTime getUltimaSiesta() {return this.ultimaSiesta;}
 
     public void setUltimaAlimentacion(LocalDateTime now) {
         this.ultimaAlimentacion = now;
