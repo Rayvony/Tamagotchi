@@ -1,35 +1,37 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioMascota;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.tallerwebi.dominio.ServicioMascotaImp;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.instanceOf;
 
+import java.time.LocalDateTime;
 
 public class ControladorMascotaTest {
     private ServicioMascota servicioMascotaMock;
     private ControladorMascota controladorMascota;
+    private MascotaDTO mascotaDTOMock;
 
     @BeforeEach
     public void inicializar() {
         servicioMascotaMock = mock(ServicioMascota.class);
         controladorMascota = new ControladorMascota(servicioMascotaMock);
+        mascotaDTOMock = mock(MascotaDTO.class);
     }
 
-
     @Test
-    public void queSePuedaCrearUnaMascotaConUnNombre(){
+    public void queSePuedaCrearUnaMascotaConUnNombre() {
 
-        //Usuario usuarioPrueba = new Usuario();
+        // Usuario usuarioPrueba = new Usuario();
         String nombreMascota = "Firulais";
         MascotaDTO mascotaDTOPrueba = new MascotaDTO(nombreMascota);
         when(this.servicioMascotaMock.crearMascota(anyString())).thenReturn(mascotaDTOPrueba);
@@ -39,7 +41,29 @@ public class ControladorMascotaTest {
         String vistaEsperada = "mascota";
 
         assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
+    }
 
+    @Test
+    public void queUnUsuarioPresionaAlimentarYLaMascotaDisminuyaSuHambreYRegistreSuHorarioDeAlimentacion() {
+        String nombreMascota = "Firulais";
+        MascotaDTO mascotaDTOPrueba = new MascotaDTO(nombreMascota);
+        mascotaDTOPrueba.setId(1L);
+        
+        when(this.servicioMascotaMock.traerUnaMascota(anyLong())).thenReturn(mascotaDTOPrueba);
+
+        doAnswer(invocation -> {
+            MascotaDTO mascota = invocation.getArgument(0);
+            mascota.setHambre(mascota.getHambre() - 25.00);
+            mascota.setUltimaAlimentacion(LocalDateTime.now());
+            return mascota;
+        }).when(this.servicioMascotaMock).alimentar(mascotaDTOPrueba);
+
+        ModelAndView modelAndView = controladorMascota.alimentar(mascotaDTOPrueba.getId());
+
+        String vistaEsperada = "mascota";
+
+        assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
+        assertThat(modelAndView.getModel().get("ultimaAlimentacion"), instanceOf(LocalDateTime.class));
     }
 
 }

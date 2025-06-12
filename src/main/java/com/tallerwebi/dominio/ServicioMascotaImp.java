@@ -2,10 +2,12 @@ package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.dominio.excepcion.MascotaSatisfecha;
 import com.tallerwebi.presentacion.MascotaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -54,6 +56,21 @@ public class ServicioMascotaImp implements ServicioMascota {
             this.actualizarMascota(mascota);
         } else {
             throw new EnergiaInsuficiente("No podés jugar, te falta energía");
+        }
+
+        return mascota;
+    }
+
+    public MascotaDTO alimentar(MascotaDTO mascota) {
+        Double hambreADescontarPorJuego = 25.00;
+        Double hambreActual = mascota.getHambre();
+        if (hambreActual >= hambreADescontarPorJuego) {
+            mascota.setHambre(hambreActual - hambreADescontarPorJuego);
+            mascota.setUltimaAlimentacion(LocalDateTime.now());
+            //actualizamos en base de datos
+            this.actualizarMascota(mascota);
+        } else {
+            throw new MascotaSatisfecha("Tu mascota está satisfecha");
         }
 
         return mascota;

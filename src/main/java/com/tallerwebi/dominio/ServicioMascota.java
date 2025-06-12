@@ -15,6 +15,7 @@ public interface ServicioMascota {
 
     MascotaDTO crearMascota(String nombre);
     MascotaDTO jugar(MascotaDTO mascota);////A borrar
+    MascotaDTO alimentar(MascotaDTO mascota);
 }
 
 

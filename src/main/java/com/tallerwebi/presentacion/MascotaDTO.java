@@ -1,5 +1,7 @@
 package com.tallerwebi.presentacion;
 
+import java.time.LocalDateTime;
+
 import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 
@@ -13,9 +15,14 @@ public class MascotaDTO {
     private Double felicidad;
     private Double hambre;
     private Boolean estaVivo;
+    private LocalDateTime ultimaAlimentacion;
 
     public void setEnergia(Double energia) {
         this.energia = energia;
+    }
+
+    public void setHambre(Double hambre) {
+        this.hambre = hambre;
     }
 
     public MascotaDTO(String nombre) {
@@ -26,6 +33,7 @@ public class MascotaDTO {
         this.felicidad=100.00;
         this.hambre= 100.00;
         this.estaVivo = true;
+        this.ultimaAlimentacion = LocalDateTime.now();
     }
 
     public MascotaDTO(Mascota mascota) {
@@ -85,7 +93,20 @@ public class MascotaDTO {
         mascota.setFelicidad(this.felicidad);
         mascota.setHambre(this.hambre);
         mascota.setEstaVivo(this.estaVivo);
+        mascota.setUltimaAlimentacion(this.ultimaAlimentacion);
         return mascota;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUltimaAlimentacion(LocalDateTime now) {
+        this.ultimaAlimentacion = now;
+    }
+
+    public LocalDateTime getUltimaAlimentacion() {
+        return this.ultimaAlimentacion;
     }
 
 }

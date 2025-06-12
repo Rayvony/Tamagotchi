@@ -3,6 +3,8 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.ServicioMascota;
 import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.dominio.excepcion.MascotaSatisfecha;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -65,5 +67,21 @@ public class ControladorMascota {
         MascotaDTO mascota = servicioMascota.traerUnaMascota(id);
         modelo.put("mascota", mascota);
         return new ModelAndView("mascota", modelo);
+    }
+
+    @RequestMapping(path = "/mascota/alimentar", method = RequestMethod.POST)
+    public ModelAndView alimentar(Long id) {
+       MascotaDTO mascota= servicioMascota.traerUnaMascota(id);
+       
+        try {
+            mascota = servicioMascota.alimentar(mascota);
+        } catch (MascotaSatisfecha mascotaSatisfecha) {
+            modelo.put("error","Tu mascota está satisfecha");
+        }
+
+        modelo.put("ultimaAlimentacion", mascota.getUltimaAlimentacion());
+        modelo.put("mascota", mascota);
+
+        return new ModelAndView("mascota",modelo);
     }
 }

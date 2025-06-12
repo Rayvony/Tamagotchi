@@ -2,6 +2,8 @@ package com.tallerwebi.dominio.entidades;
 
 import com.tallerwebi.dominio.Usuario;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 @Entity
@@ -26,7 +28,9 @@ public class Mascota {
     private Double hambre;
     @Column
     private Boolean estaVivo;
-
+    @Column
+    private LocalDateTime ultimaAlimentacion;
+    
     @ManyToOne
     Usuario usuario;
 
@@ -40,6 +44,7 @@ public class Mascota {
         this.felicidad=felicidad;
         this.hambre= hambre;
         this.estaVivo=estaVivo;
+        this.ultimaAlimentacion = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -104,5 +109,13 @@ public class Mascota {
 
     public void setEstaVivo(Boolean estaVivo) {
         this.estaVivo = estaVivo;
+    }
+
+    public void setUltimaAlimentacion(LocalDateTime now) {
+        this.ultimaAlimentacion = now;
+    }
+
+    public LocalDateTime getUltimaAlimentacion() {
+        return ultimaAlimentacion;
     }
 }
