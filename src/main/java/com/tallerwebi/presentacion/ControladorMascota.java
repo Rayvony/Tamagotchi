@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.ServicioMascota;
 import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
+import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
 import com.tallerwebi.dominio.excepcion.MascotaSatisfecha;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +70,25 @@ public class ControladorMascota {
         return new ModelAndView("mascota", modelo);
     }
 
+    @RequestMapping(path = "/mascota/limpiar", method = RequestMethod.POST)
+    public ModelAndView limpiarMascota(Long id) {
+        MascotaDTO mascota = servicioMascota.traerUnaMascota(id);
+
+        try {
+            servicioMascota.limpiarMascota(mascota);
+        } catch (LimpiezaMaximaException limpiezaMaxima) {
+            modelo.put("error", "La higiene se encuentra al maximo");
+        }
+
+        modelo.put("mascota", mascota);
+
+        return new ModelAndView("mascota", modelo);
+    }
+
     @RequestMapping(path = "/mascota/alimentar", method = RequestMethod.POST)
     public ModelAndView alimentar(Long id) {
        MascotaDTO mascota= servicioMascota.traerUnaMascota(id);
-       
+
         try {
             mascota = servicioMascota.alimentar(mascota);
         } catch (MascotaSatisfecha mascotaSatisfecha) {

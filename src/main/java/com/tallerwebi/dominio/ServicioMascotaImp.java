@@ -3,10 +3,12 @@ package com.tallerwebi.dominio;
 import com.tallerwebi.dominio.entidades.Mascota;
 import com.tallerwebi.dominio.excepcion.EnergiaInsuficiente;
 import com.tallerwebi.dominio.excepcion.MascotaSatisfecha;
+import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
 import com.tallerwebi.presentacion.MascotaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class ServicioMascotaImp implements ServicioMascota {
         Double energiaActual = mascota.getEnergia();
         if (energiaActual >= energiaADescontarPorJuego) {
             mascota.setEnergia(energiaActual - energiaADescontarPorJuego);
+            mascota.setHigiene(mascota.getHigiene() - 25.0);
             //actualizamos en base de datos
             this.actualizarMascota(mascota);
         } else {
@@ -74,5 +77,31 @@ public class ServicioMascotaImp implements ServicioMascota {
         }
 
         return mascota;
+    }
+
+    @Override
+    public MascotaDTO limpiarMascota(MascotaDTO mascota) throws LimpiezaMaximaException {
+        if(mascota.getHigiene() == 100.0) {
+            throw new LimpiezaMaximaException("La higiene ya se encuentra al máximo");
+        } else {
+            mascota.setHigiene(100.0);
+            mascota.setUltimaHigiene(LocalDateTime.now());
+            this.actualizarMascota(mascota);
+            return mascota;
+        }
+    }
+
+    @Override
+    public MascotaDTO actualizarHigiene(MascotaDTO mascota, LocalDateTime horaActual) {
+        double minutos = (double) Duration.between(mascota.getUltimaHigiene(), horaActual).toMinutes();
+        double higienePerdida = minutos * 0.09;
+        double higieneActual = mascota.getHigiene() - higienePerdida;
+
+        mascota.setHigiene(Math.max(higieneActual, 0.0));
+
+        this.actualizarMascota(mascota);
+
+        return mascota;
+
     }
 }

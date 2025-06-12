@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioMascota;
+import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,7 @@ public class ControladorMascotaTest {
         String nombreMascota = "Firulais";
         MascotaDTO mascotaDTOPrueba = new MascotaDTO(nombreMascota);
         mascotaDTOPrueba.setId(1L);
-        
+
         when(this.servicioMascotaMock.traerUnaMascota(anyLong())).thenReturn(mascotaDTOPrueba);
 
         doAnswer(invocation -> {
@@ -65,5 +66,25 @@ public class ControladorMascotaTest {
         assertThat(vistaEsperada, equalTo(modelAndView.getViewName()));
         assertThat(modelAndView.getModel().get("ultimaAlimentacion"), instanceOf(LocalDateTime.class));
     }
+
+    @Test
+    public void queAlLimpiarLaMascotaSeMuestreLaVistaCorrecta() throws LimpiezaMaximaException {
+        Long idMascota = 1L;
+        MascotaDTO mascotaDePrueba = new MascotaDTO("Firulais");
+        mascotaDePrueba.setId(idMascota);
+
+        when(this.servicioMascotaMock.traerUnaMascota(anyLong())).thenReturn(mascotaDePrueba);
+        when(this.servicioMascotaMock.limpiarMascota(mascotaDePrueba)).thenReturn(mascotaDePrueba);
+
+        ModelAndView modelAndView = controladorMascota.limpiarMascota(idMascota);
+
+        assertThat(modelAndView.getViewName(), equalTo("mascota"));
+        assertThat(modelAndView.getModel().get("mascota"), equalTo(mascotaDePrueba));
+
+    }
+
+
+
+
 
 }

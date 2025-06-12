@@ -30,7 +30,10 @@ public class Mascota {
     private Boolean estaVivo;
     @Column
     private LocalDateTime ultimaAlimentacion;
-    
+
+    @Column
+    private LocalDateTime ultimaHigiene;
+
     @ManyToOne
     Usuario usuario;
 
@@ -45,6 +48,7 @@ public class Mascota {
         this.hambre= hambre;
         this.estaVivo=estaVivo;
         this.ultimaAlimentacion = LocalDateTime.now();
+        this.ultimaHigiene = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -117,5 +121,13 @@ public class Mascota {
 
     public LocalDateTime getUltimaAlimentacion() {
         return ultimaAlimentacion;
+    }
+
+    public LocalDateTime getUltimaHigiene() {
+        return ultimaHigiene;
+    }
+
+    public void setUltimaHigiene(LocalDateTime ultimaHigiene) {
+        this.ultimaHigiene = ultimaHigiene;
     }
 }
