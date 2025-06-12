@@ -52,6 +52,9 @@ public class MascotaDTO {
         this.felicidad=mascota.getFelicidad();
         this.hambre= mascota.getHambre();
         this.estaVivo = mascota.getEstaVivo();
+        this.ultimaSiesta = mascota.getUltimaSiesta() ;
+        this.ultimaHigiene = mascota.getUltimaHigiene();
+        this.ultimaAlimentacion = mascota.getUltimaAlimentacion();
     }
 
     public Long getId(){return this.id;};
