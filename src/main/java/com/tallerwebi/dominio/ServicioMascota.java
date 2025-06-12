@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.entidades.Mascota;
+import com.tallerwebi.dominio.excepcion.EnergiaMaxima;
 import com.tallerwebi.presentacion.MascotaDTO;
 
 import javax.transaction.Transactional;
@@ -14,7 +15,9 @@ public interface ServicioMascota {
     void actualizarMascota(MascotaDTO mascota);
 
     MascotaDTO crearMascota(String nombre);
-    MascotaDTO jugar(MascotaDTO mascota);////A borrar
+    MascotaDTO jugar(MascotaDTO mascota);
+
+    MascotaDTO dormir(MascotaDTO mascota) throws EnergiaMaxima; ////A borrar
 }
 
 
