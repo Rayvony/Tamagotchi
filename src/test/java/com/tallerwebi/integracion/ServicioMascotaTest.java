@@ -11,6 +11,7 @@ import com.tallerwebi.dominio.RepositorioMascota;
 import com.tallerwebi.dominio.ServicioMascota;
 import com.tallerwebi.dominio.ServicioMascotaImp;
 import com.tallerwebi.dominio.entidades.Mascota;
+import com.tallerwebi.dominio.excepcion.EnergiaMaxima;
 import com.tallerwebi.dominio.excepcion.LimpiezaMaximaException;
 import com.tallerwebi.presentacion.MascotaDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -131,6 +132,63 @@ public class ServicioMascotaTest {
 
         //VERIFICACION
         assertThat(mascotaDTO.getHigiene(), equalTo(75.0));
+    }
+
+    @Test
+    public void cuandoLaMascotaSeDuermeYTieneEnergiaBajaSeLeSuma25() throws EnergiaMaxima{
+        //PREPARACION
+        Mascota mascotaEntidad = new Mascota();
+        mascotaEntidad.setId(1L);
+        mascotaEntidad.setEnergia(60.0);
+
+        when(repositorioMascota.obtenerPor(mascotaEntidad.getId())).thenReturn(mascotaEntidad);
+
+        //ACCION
+        MascotaDTO mascotaDTO = servicioMascota.traerUnaMascota(mascotaEntidad.getId());
+        servicioMascota.dormir(mascotaDTO);
+
+        //VERIFICACION
+        assertThat(mascotaDTO.getEnergia(), equalTo(85.0));
+    }
+
+    @Test
+    public void cuandoSeDuermeUnaMascotaConEnergiaMaximaLanzaUnaExcepcion() throws EnergiaMaxima {
+        //PREPARACION
+        Mascota mascotaEntidad = new Mascota();
+        mascotaEntidad.setId(1L);
+        mascotaEntidad.setEnergia(100.0);
+
+        when(repositorioMascota.obtenerPor(mascotaEntidad.getId())).thenReturn(mascotaEntidad);
+
+        //ACCION
+        MascotaDTO mascotaDTO = servicioMascota.traerUnaMascota(mascotaEntidad.getId());
+
+        //VERIFICACION
+        try {
+            servicioMascota.dormir(mascotaDTO);
+            fail ("Se esperaba EnergiaMaxima, pero no se lanzó");
+        } catch (EnergiaMaxima e) {
+            assertThat(e.getMessage(), containsString("No se puede dormir porque no tiene sueño"));
+        }
+
+    }
+
+    @Test
+    public void cuandoDuermeYTiene75DeEnergiaSubeSoloHasta100() throws EnergiaMaxima {
+        //PREPARACION
+        Mascota mascotaEntidad = new Mascota();
+        mascotaEntidad.setId(1L);
+        mascotaEntidad.setEnergia(75.0);
+
+        when(repositorioMascota.obtenerPor(mascotaEntidad.getId())).thenReturn(mascotaEntidad);
+
+        //ACCION
+        MascotaDTO mascotaDTO = servicioMascota.traerUnaMascota(mascotaEntidad.getId());
+
+        servicioMascota.dormir(mascotaDTO);
+
+        //VERIFICACION
+        assertThat(mascotaDTO.getEnergia(), equalTo(100.0));
     }
 
 }

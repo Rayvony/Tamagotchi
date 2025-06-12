@@ -15,13 +15,16 @@
 
 <body>
 <main role="main" class="container">
+  <h2 th:text="'Nombre: ' + ${mascota.nombre}"></h2><br>
   <div class="container">
     <div class="bar-container">
       <div class="bar energy">
         <img class="icon" th:src="@{/img/energy.png}" />
+        <div class="bar-fill" style="color: #000000; font-weight: bold;" th:text=" ${mascota.energia} + '%'"></div>
       </div>
       <div class="bar happiness">
         <img class="icon" th:src="@{/img/happiness.png}" />
+        <div class="bar-fill" style="color: #000000; font-weight: bold;" th:text=" ${mascota.felicidad} + '%'"></div>
       </div>
     </div>
 
@@ -29,10 +32,9 @@
       <div class="pet">
         <img th:src="@{/img/huevo.png}" alt="Pet" class="pet-image" />
       </div>
-      <h2 th:text="'Nombre: ' + ${mascota.nombre} + 'Energia:' + ${mascota.energia}"></h2><br>
-      <h2 th:text="'Salud: ' + ${mascota.salud} + 'higiene:' + ${mascota.higiene}"></h2><br>
-      <h2 th:text="'Felicidad: ' + ${mascota.felicidad} + 'Hambre:' + ${mascota.hambre}"></h2><br>
-      <h2 th:text="'Esta vivo?: ' + ${mascota.estaVivo}"></h2>
+      <!--
+      <h2 th:text="'Salud: ' + ${mascota.salud} "></h2><br>
+      <h2 th:text="'Esta vivo?: ' + ${mascota.estaVivo}"></h2>-->
 
 
       <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
@@ -41,9 +43,13 @@
     <div class="bar-container">
       <div class="bar hunger">
         <img class="icon" th:src="@{/img/hunger.png}" />
+        <div class="bar-fill" style="color: #000000; font-weight: bold;"  th:text=" ${mascota.hambre} + '%'"></div>
+
       </div>
       <div class="bar cleanliness">
         <img class="icon" th:src="@{/img/cleanliness.png}" />
+        <div class="bar-fill" style="color: #000000; font-weight: bold;" th:text=" ${mascota.higiene} + '%'"></div>
+
       </div>
     </div>
 
